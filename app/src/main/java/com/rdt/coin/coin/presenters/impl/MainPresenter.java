@@ -2,11 +2,13 @@ package com.rdt.coin.coin.presenters.impl;
 
 
 import com.rdt.coin.coin.CoinClient;
+import com.rdt.coin.coin.LogUtils;
 import com.rdt.coin.coin.Point;
 import com.rdt.coin.coin.presenters.BasePresenter;
 import com.rdt.coin.coin.presenters.IMainPresenter;
 import com.rdt.coin.coin.views.IMainView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
@@ -22,21 +24,39 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
 
     @Override
     public void getPoints(String points) {
-        Call<List<Point>> call = CoinClient.getCoinService().getPoints(points);
-        handleAsyncCall(call);
+        Call<List<String[]>> call = CoinClient.getCoinService().getPoints(points);
+        call.enqueue(new Callback<List<String[]>>() {
+            @Override
+            public void onResponse(Response<List<String[]>> response, Retrofit retrofit) {
+
+                // This parse could be avoid if the API side return data in an object-oriented form
+                List<String[]> rawData = response.body();
+                List<Point> points = new ArrayList<>(rawData.size());
+                for (String[] point : rawData) {
+                    points.add(new Point(point));
+                }
+                // ----------
+
+                getView().onReceivedDataSucceed(points);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                LogUtils.debug(t.getMessage());
+            }
+        });
     }
 
     @Override
     public void getPointsWithTimestamps(String points, String timestamp1, String timestamp2) {
-        Call<List<Point>> call = CoinClient.getCoinService().getPointsWithTimestamps(points, timestamp1, timestamp2);
+        Call<List<String[]>> call = CoinClient.getCoinService().getPointsWithinTimeRange(points, timestamp1, timestamp2);
         handleAsyncCall(call);
     }
 
-    private void handleAsyncCall(Call<List<Point>> call) {
-        call.enqueue(new Callback<List<Point>>() {
+    private void handleAsyncCall(Call<List<String[]>> call) {
+        call.enqueue(new Callback<List<String[]>>() {
             @Override
-            public void onResponse(Response<List<Point>> response, Retrofit retrofit) {
-
+            public void onResponse(Response<List<String[]>> response, Retrofit retrofit) {
             }
 
             @Override

@@ -1,19 +1,25 @@
 package com.rdt.coin.coin;
 
 public class Point {
-    private double price;
-    private long time;
-    private int latency;
+    private String price;
+    private String time;
+    private String latency;
 
-    public double getPrice() {
+    public Point(String[] strings) {
+        price = strings[0];
+        time = strings[1];
+        latency = strings[2];
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public int getLatency() {
+    public String getLatency() {
         return latency;
     }
 }
