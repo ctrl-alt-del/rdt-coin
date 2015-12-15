@@ -21,6 +21,7 @@ android {
 
 ext {
     androidSupportLibrariesVersion = '23.1.1'
+    retrofitLibrariesVersion = '2.0.0-beta2'
 }
 
 dependencies {
@@ -28,6 +29,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${androidSupportLibrariesVersion}"
     compile "com.android.support:design:${androidSupportLibrariesVersion}"
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson'
+    compile "com.squareup.retrofit:retrofit:${retrofitLibrariesVersion}"
+    compile "com.squareup.retrofit:converter-gson:${retrofitLibrariesVersion}"
 }
