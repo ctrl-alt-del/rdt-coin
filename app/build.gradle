@@ -29,4 +29,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:${androidSupportLibrariesVersion}"
     compile "com.android.support:design:${androidSupportLibrariesVersion}"
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson'
 }

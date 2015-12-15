@@ -6,7 +6,7 @@ public class CoinClient {
 
     private static CoinService sCoinService;
 
-    public CoinService getCoinService() {
+    public static CoinService getCoinService() {
         if (sCoinService == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://coin.melikesit.com")
