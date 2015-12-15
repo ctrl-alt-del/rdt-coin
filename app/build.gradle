@@ -34,5 +34,6 @@ dependencies {
     compile "com.squareup.retrofit:adapter-rxjava:${retrofitLibrariesVersion}"
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
 
 }

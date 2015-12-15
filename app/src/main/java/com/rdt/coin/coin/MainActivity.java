@@ -3,27 +3,33 @@ package com.rdt.coin.coin;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.rdt.coin.coin.presenters.impl.MainPresenter;
 import com.rdt.coin.coin.views.IMainView;
 import com.rdt.coin.coin.views.impl.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
     private MainPresenter mMainPresenter;
+    private LineChart mChartView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mChartView = (LineChart) findViewById(R.id.chart);
         setSupportActionBar(toolbar);
         mMainPresenter = new MainPresenter(this);
 
@@ -62,9 +68,17 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onReceivedDataSucceed(List<Point> points) {
+        List<Entry> x = new ArrayList<>();
+        List<String> y = new ArrayList<>();
+        int i = 0;
         for (Point point : points) {
+            y.add(point.getTime());
+            x.add(new Entry(Float.valueOf(point.getPrice()), i));
+            i++;
             LogUtils.debug("==> " + point.getPrice());
         }
+        mChartView.setData(new LineData(y, new LineDataSet(x, "Price")));
+        mChartView.invalidate();
     }
 
     @Override

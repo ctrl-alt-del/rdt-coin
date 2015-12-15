@@ -25,6 +25,16 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     @Override
     public void getPoints(String points) {
         Call<List<String[]>> call = CoinClient.getCoinService().getPoints(points);
+        handleAsyncCall(call);
+    }
+
+    @Override
+    public void getPointsWithTimestamps(String points, String timestamp1, String timestamp2) {
+        Call<List<String[]>> call = CoinClient.getCoinService().getPointsWithinTimeRange(points, timestamp1, timestamp2);
+        handleAsyncCall(call);
+    }
+
+    private void handleAsyncCall(Call<List<String[]>> call) {
         call.enqueue(new Callback<List<String[]>>() {
             @Override
             public void onResponse(Response<List<String[]>> response, Retrofit retrofit) {
@@ -43,25 +53,6 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
             @Override
             public void onFailure(Throwable t) {
                 LogUtils.debug(t.getMessage());
-            }
-        });
-    }
-
-    @Override
-    public void getPointsWithTimestamps(String points, String timestamp1, String timestamp2) {
-        Call<List<String[]>> call = CoinClient.getCoinService().getPointsWithinTimeRange(points, timestamp1, timestamp2);
-        handleAsyncCall(call);
-    }
-
-    private void handleAsyncCall(Call<List<String[]>> call) {
-        call.enqueue(new Callback<List<String[]>>() {
-            @Override
-            public void onResponse(Response<List<String[]>> response, Retrofit retrofit) {
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
             }
         });
     }
