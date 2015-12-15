@@ -9,9 +9,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.rdt.coin.coin.presenters.impl.MainPresenter;
+import com.rdt.coin.coin.views.IMainView;
 import com.rdt.coin.coin.views.impl.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+import java.util.List;
+
+public class MainActivity extends BaseActivity implements IMainView {
+
+    private MainPresenter mMainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mMainPresenter = new MainPresenter(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -26,6 +33,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                mMainPresenter.getPoints("10");
             }
         });
     }
@@ -50,5 +58,17 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onReceivedDataSucceed(List<Point> points) {
+        for (Point point : points) {
+            LogUtils.debug("==> " + point.getPrice());
+        }
+    }
+
+    @Override
+    public void onReceivedDataFailed(String errorMessage) {
+
     }
 }
