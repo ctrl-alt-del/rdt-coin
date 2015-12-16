@@ -23,7 +23,7 @@ To run the app, clone this repository and import it into Android Studio, and hit
 ### Features and Highlights
 
 1. The app implements Model-View-Presenter (MVP) design pattern
-2. Implemented date pickers and edit text field to allow user to specify the data amount and time range
+2. Implemented date pickers and edit text field to allow user to specify the data point amount and time range
 3. Implemented a chart view to allow user to interact with the data (e.g. move around and zoom in/out in both vertical and horizontal direction)
 4. Prevented negative time range
 
@@ -32,4 +32,4 @@ To run the app, clone this repository and import it into Android Studio, and hit
 ### Issues
 
 1. Server doesn't response if the request queries `n=1`
-2. Some data parsing is current being done in presenter and view level in the app; ideally, those works would be eliminated if the response construct its data in a object-oriented way instead of being served as raw multi-level array.
+2. Some data parsing is currently being done in the presenter and view level (or main thread) in the app; ideally, those works would be eliminated if the response wraps its data in a object-oriented manner instead of serving them as raw multi-level array.
