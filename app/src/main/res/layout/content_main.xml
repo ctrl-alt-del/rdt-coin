@@ -21,6 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:textSize="32sp"
-        android:text="Click to get data ->" />
+        android:text="@string/hint"
+        android:textSize="32sp" />
 </LinearLayout>

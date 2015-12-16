@@ -1,25 +1,26 @@
 package com.rdt.coin.coin;
 
 public class Point {
-    private String price;
-    private String time;
-    private String latency;
+    private float price;
+    private long time;
+    private int latency;
 
     public Point(String[] strings) {
-        price = strings[0];
-        time = strings[1];
-        latency = strings[2];
+        price = Float.valueOf(strings[0]);
+        // TODO: This is not the proper way of doing it; data cleaning should be done on server side
+        time = (long) ((float) Float.valueOf(strings[1]));
+        latency = Integer.valueOf(strings[2]);
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public String getTime() {
+    public long getReadableTime() {
         return time;
     }
 
-    public String getLatency() {
+    public int getLatency() {
         return latency;
     }
 }

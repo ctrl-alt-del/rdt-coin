@@ -68,16 +68,16 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onReceivedDataSucceed(List<Point> points) {
-        List<Entry> x = new ArrayList<>();
-        List<String> y = new ArrayList<>();
-        int i = 0;
-        for (Point point : points) {
-            y.add(point.getTime());
-            x.add(new Entry(Float.valueOf(point.getPrice()), i));
-            i++;
-            LogUtils.debug("==> " + point.getPrice());
+
+        List<Entry> prices = new ArrayList<>();
+        List<String> timestamps = new ArrayList<>();
+        Point point;
+        for (int i = 0; i < points.size(); i++) {
+            point = points.get(i);
+            timestamps.add(JodaTimeUtils.getTime(point.getReadableTime()));
+            prices.add(new Entry(Float.valueOf(point.getPrice()), i));
         }
-        mChartView.setData(new LineData(y, new LineDataSet(x, "Price")));
+        mChartView.setData(new LineData(timestamps, new LineDataSet(prices, getString(R.string.price))));
         mChartView.invalidate();
     }
 

@@ -31,9 +31,6 @@ dependencies {
     compile "com.android.support:design:${androidSupportLibrariesVersion}"
     compile "com.squareup.retrofit:retrofit:${retrofitLibrariesVersion}"
     compile "com.squareup.retrofit:converter-gson:${retrofitLibrariesVersion}"
-    compile "com.squareup.retrofit:adapter-rxjava:${retrofitLibrariesVersion}"
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.google.code.gson:gson:2.4'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
-
+    compile 'net.danlew:android.joda:2.8.1'
 }
