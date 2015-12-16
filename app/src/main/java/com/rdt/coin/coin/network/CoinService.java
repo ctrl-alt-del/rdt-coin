@@ -11,6 +11,6 @@ public interface CoinService {
     Call<List<String[]>> getPoints(@Query("n") String points);
 
     @GET("cnbs.btc.usd")
-    Call<List<String[]>> getPointsWithinTimeRange(@Query("n") String points,
-                                               @Query("t1") String t1, @Query("t2") String t2);
+    Call<List<String[]>> getPoints(@Query("n") String points,
+                                   @Query("t1") String t1, @Query("t2") String t2);
 }

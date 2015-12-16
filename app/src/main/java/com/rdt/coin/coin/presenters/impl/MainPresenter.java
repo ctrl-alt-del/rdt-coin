@@ -1,11 +1,11 @@
 package com.rdt.coin.coin.presenters.impl;
 
 
-import com.rdt.coin.coin.network.CoinClient;
-import com.rdt.coin.coin.utils.LogUtils;
 import com.rdt.coin.coin.models.Point;
+import com.rdt.coin.coin.network.CoinClient;
 import com.rdt.coin.coin.presenters.BasePresenter;
 import com.rdt.coin.coin.presenters.IMainPresenter;
+import com.rdt.coin.coin.utils.LogUtils;
 import com.rdt.coin.coin.views.IMainView;
 
 import java.util.ArrayList;
@@ -29,8 +29,8 @@ public class MainPresenter extends BasePresenter<IMainView> implements IMainPres
     }
 
     @Override
-    public void getPointsWithTimestamps(String points, String timestamp1, String timestamp2) {
-        Call<List<String[]>> call = CoinClient.getCoinService().getPointsWithinTimeRange(points, timestamp1, timestamp2);
+    public void getPoints(String points, String timestamp1, String timestamp2) {
+        Call<List<String[]>> call = CoinClient.getCoinService().getPoints(points, timestamp1, timestamp2);
         handleAsyncCall(call);
     }
 

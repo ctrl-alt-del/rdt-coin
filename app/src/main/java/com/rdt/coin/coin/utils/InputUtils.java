@@ -7,8 +7,11 @@ import android.widget.EditText;
 public class InputUtils {
 
     public static String getPoints(Activity activity, int editTextResId, int defaultValue) {
-        EditText editText = (EditText) activity.findViewById(editTextResId);
-        String points = editText.getText().toString().trim();
+        String points = getEditTextContent((EditText) activity.findViewById(editTextResId));
         return !TextUtils.isEmpty(points) && TextUtils.isDigitsOnly(points) ? points : String.valueOf(defaultValue);
+    }
+
+    public static String getEditTextContent(EditText editText) {
+        return editText.getText().toString().trim();
     }
 }

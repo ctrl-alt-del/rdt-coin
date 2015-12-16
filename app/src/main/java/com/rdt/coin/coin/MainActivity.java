@@ -1,13 +1,13 @@
 package com.rdt.coin.coin;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,17 +24,17 @@ import com.rdt.coin.coin.views.impl.BaseActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
     private MainPresenter mMainPresenter;
     private LineChart mChartView;
-    private EditText mNumberOfPoints;
     private Calendar mStartDateCalendar;
     private EditText mStartDateEditText;
     private EditText mEndDateEditText;
-    private DatePickerDialog mDataPicker;
     private Calendar mEndDateCalendar;
+    private Snackbar mDataLoadedSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mChartView = (LineChart) findViewById(R.id.chart);
-        mNumberOfPoints = (EditText) findViewById(R.id.data_points);
         mStartDateEditText = (EditText) findViewById(R.id.start_date);
         mEndDateEditText = (EditText) findViewById(R.id.end_date);
         setSupportActionBar(toolbar);
@@ -73,14 +72,28 @@ public class MainActivity extends BaseActivity implements IMainView {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        mDataLoadedSnackbar = Snackbar.make(fab, "", Snackbar.LENGTH_SHORT);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
                 String points = InputUtils.getPoints(getActivity(), R.id.data_points, 10);
-                mMainPresenter.getPoints(points);
+                String startTimestampText = InputUtils.getEditTextContent(mStartDateEditText);
+                String endTimestampText = InputUtils.getEditTextContent(mEndDateEditText);
+
+                if (!TextUtils.isEmpty(startTimestampText) && !TextUtils.isEmpty(endTimestampText)) {
+                    // convert millisecond used in Java to second used server
+                    long startTimestamp = TimeUnit.SECONDS.convert(mStartDateCalendar.getTimeInMillis(), TimeUnit.MILLISECONDS);
+                    long endTimestamp = TimeUnit.SECONDS.convert(mEndDateCalendar.getTimeInMillis(), TimeUnit.MILLISECONDS);
+
+                    if (endTimestamp < startTimestamp) {
+                        // negative time range
+                        mDataLoadedSnackbar.setText(R.string.negative_time_range).show();
+                    } else {
+                        mMainPresenter.getPoints(points, String.valueOf(startTimestamp), String.valueOf(endTimestamp));
+                    }
+                } else {
+                    mMainPresenter.getPoints(points);
+                }
             }
         });
     }
@@ -112,18 +125,21 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         List<Entry> prices = new ArrayList<>();
         List<String> timestamps = new ArrayList<>();
+        // Again, this can be avoid if data from server is object oriented
         Point point;
         for (int i = 0; i < points.size(); i++) {
             point = points.get(i);
             timestamps.add(JodaTimeUtils.getReadableTime(point.getTime()));
             prices.add(new Entry(point.getPrice(), i));
         }
+        // ---------
         mChartView.setData(new LineData(timestamps, new LineDataSet(prices, getString(R.string.price))));
         mChartView.invalidate();
+        mDataLoadedSnackbar.setText(R.string.data_loaded).show();
     }
 
     @Override
     public void onReceivedDataFailed(String errorMessage) {
-
+        mDataLoadedSnackbar.setText(errorMessage).show();
     }
 }

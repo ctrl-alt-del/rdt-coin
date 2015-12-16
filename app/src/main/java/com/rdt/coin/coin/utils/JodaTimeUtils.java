@@ -17,12 +17,12 @@ import java.util.concurrent.TimeUnit;
 
 public class JodaTimeUtils {
     private static final String DEFAULT_TIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
-    private static final DateTimeFormatter dtf = DateTimeFormat.forPattern(DEFAULT_TIME_FORMAT);
+    private static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormat.forPattern(DEFAULT_TIME_FORMAT);
 
     public static String getReadableTime(long timestamp) {
         // convert second to millisecond because Java is looking for millisecond
         DateTime dateTime = new DateTime(TimeUnit.MILLISECONDS.convert(timestamp, TimeUnit.SECONDS));
-        return dateTime.toString(dtf);
+        return dateTime.toString(DEFAULT_DATE_TIME_FORMATTER);
     }
 
     public static DatePickerDialog createDatePickerDialog(final Activity activity, final Calendar calendar, final EditText datePickerDisplayView) {
@@ -40,7 +40,7 @@ public class JodaTimeUtils {
     }
 
     public static String getReadableCalendarDate(Context context, Calendar calendar) {
-        return context.getString(R.string.date_picker_format, calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        return context.getString(R.string.date_picker_format, calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR));
     }
 }

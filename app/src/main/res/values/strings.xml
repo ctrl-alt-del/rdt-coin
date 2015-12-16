@@ -5,4 +5,6 @@
     <string name="date_hint">MM/DD/YYYY</string>
     <string name="price">Price</string>
     <string name="date_picker_format">%1$s/%2$s/%3$s</string>
+    <string name="data_loaded">Data download completed</string>
+    <string name="negative_time_range">Unable to deal to negative time range</string>
 </resources>
