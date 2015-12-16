@@ -24,7 +24,6 @@ import com.rdt.coin.coin.views.impl.BaseActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
@@ -82,8 +81,8 @@ public class MainActivity extends BaseActivity implements IMainView {
 
                 if (!TextUtils.isEmpty(startTimestampText) && !TextUtils.isEmpty(endTimestampText)) {
                     // convert millisecond used in Java to second used server
-                    long startTimestamp = TimeUnit.SECONDS.convert(mStartDateCalendar.getTimeInMillis(), TimeUnit.MILLISECONDS);
-                    long endTimestamp = TimeUnit.SECONDS.convert(mEndDateCalendar.getTimeInMillis(), TimeUnit.MILLISECONDS);
+                    long startTimestamp = JodaTimeUtils.convertMillisecondToSecond(mStartDateCalendar.getTimeInMillis());
+                    long endTimestamp = JodaTimeUtils.convertMillisecondToSecond(mEndDateCalendar.getTimeInMillis());
 
                     if (endTimestamp < startTimestamp) {
                         // negative time range

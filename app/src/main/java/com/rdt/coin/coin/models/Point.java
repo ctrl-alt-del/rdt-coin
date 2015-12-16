@@ -5,6 +5,7 @@ public class Point {
     private long time;
     private int latency;
 
+    // Ideally, instead of adding constructor, we should using GSON to parse the data automatically
     public Point(String[] strings) {
         price = Float.valueOf(strings[0]);
         // TODO: This is not the proper way of doing it; data cleaning should be done on server side

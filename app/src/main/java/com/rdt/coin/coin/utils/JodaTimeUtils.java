@@ -21,7 +21,7 @@ public class JodaTimeUtils {
 
     public static String getReadableTime(long timestamp) {
         // convert second to millisecond because Java is looking for millisecond
-        DateTime dateTime = new DateTime(TimeUnit.MILLISECONDS.convert(timestamp, TimeUnit.SECONDS));
+        DateTime dateTime = new DateTime(convertSecondToMillisecond(timestamp));
         return dateTime.toString(DEFAULT_DATE_TIME_FORMATTER);
     }
 
@@ -42,5 +42,13 @@ public class JodaTimeUtils {
     public static String getReadableCalendarDate(Context context, Calendar calendar) {
         return context.getString(R.string.date_picker_format, calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR));
+    }
+
+    public static long convertMillisecondToSecond(long timestamp) {
+        return TimeUnit.SECONDS.convert(timestamp, TimeUnit.MILLISECONDS);
+    }
+
+    public static long convertSecondToMillisecond(long timestamp) {
+        return TimeUnit.MILLISECONDS.convert(timestamp, TimeUnit.SECONDS);
     }
 }
