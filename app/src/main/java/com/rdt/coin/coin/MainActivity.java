@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -23,6 +25,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     private MainPresenter mMainPresenter;
     private LineChart mChartView;
+    private EditText mNumberOfPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mChartView = (LineChart) findViewById(R.id.chart);
+        mNumberOfPoints = (EditText) findViewById(R.id.data_points);
         setSupportActionBar(toolbar);
         mMainPresenter = new MainPresenter(this);
 
@@ -39,7 +43,9 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mMainPresenter.getPoints("10");
+
+                String points = InputUtils.getPoints(getActivity(), R.id.data_points, 10);
+                mMainPresenter.getPoints(points);
             }
         });
     }
@@ -75,7 +81,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         for (int i = 0; i < points.size(); i++) {
             point = points.get(i);
             timestamps.add(JodaTimeUtils.getTime(point.getReadableTime()));
-            prices.add(new Entry(Float.valueOf(point.getPrice()), i));
+            prices.add(new Entry(point.getPrice(), i));
         }
         mChartView.setData(new LineData(timestamps, new LineDataSet(prices, getString(R.string.price))));
         mChartView.invalidate();
