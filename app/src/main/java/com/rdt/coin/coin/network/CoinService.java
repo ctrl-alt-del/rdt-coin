@@ -1,4 +1,4 @@
-package com.rdt.coin.coin;
+package com.rdt.coin.coin.network;
 
 import java.util.List;
 

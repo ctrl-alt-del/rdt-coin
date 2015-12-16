@@ -1,4 +1,4 @@
-package com.rdt.coin.coin;
+package com.rdt.coin.coin.models;
 
 public class Point {
     private float price;

@@ -1,4 +1,4 @@
-package com.rdt.coin.coin;
+package com.rdt.coin.coin.network;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;

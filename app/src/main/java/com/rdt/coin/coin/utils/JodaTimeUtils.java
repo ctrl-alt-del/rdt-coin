@@ -1,10 +1,12 @@
-package com.rdt.coin.coin;
+package com.rdt.coin.coin.utils;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import com.rdt.coin.coin.R;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -34,7 +36,6 @@ public class JodaTimeUtils {
             }
 
         };
-
         return new DatePickerDialog(activity, callback, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
 

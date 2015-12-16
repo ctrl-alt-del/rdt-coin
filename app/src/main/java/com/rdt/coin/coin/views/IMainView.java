@@ -1,7 +1,7 @@
 package com.rdt.coin.coin.views;
 
 
-import com.rdt.coin.coin.Point;
+import com.rdt.coin.coin.models.Point;
 
 import java.util.List;
 

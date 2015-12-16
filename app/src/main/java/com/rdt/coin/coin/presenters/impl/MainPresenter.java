@@ -1,9 +1,9 @@
 package com.rdt.coin.coin.presenters.impl;
 
 
-import com.rdt.coin.coin.CoinClient;
-import com.rdt.coin.coin.LogUtils;
-import com.rdt.coin.coin.Point;
+import com.rdt.coin.coin.network.CoinClient;
+import com.rdt.coin.coin.utils.LogUtils;
+import com.rdt.coin.coin.models.Point;
 import com.rdt.coin.coin.presenters.BasePresenter;
 import com.rdt.coin.coin.presenters.IMainPresenter;
 import com.rdt.coin.coin.views.IMainView;

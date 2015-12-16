@@ -14,7 +14,10 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.rdt.coin.coin.models.Point;
 import com.rdt.coin.coin.presenters.impl.MainPresenter;
+import com.rdt.coin.coin.utils.InputUtils;
+import com.rdt.coin.coin.utils.JodaTimeUtils;
 import com.rdt.coin.coin.views.IMainView;
 import com.rdt.coin.coin.views.impl.BaseActivity;
 

@@ -1,4 +1,4 @@
-package com.rdt.coin.coin;
+package com.rdt.coin.coin.utils;
 
 import android.util.Log;
 
