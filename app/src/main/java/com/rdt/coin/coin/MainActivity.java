@@ -1,5 +1,6 @@
 package com.rdt.coin.coin;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import com.rdt.coin.coin.views.IMainView;
 import com.rdt.coin.coin.views.impl.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements IMainView {
@@ -25,6 +27,11 @@ public class MainActivity extends BaseActivity implements IMainView {
     private MainPresenter mMainPresenter;
     private LineChart mChartView;
     private EditText mNumberOfPoints;
+    private Calendar mStartDateCalendar;
+    private EditText mStartDateEditText;
+    private EditText mEndDateEditText;
+    private DatePickerDialog mDataPicker;
+    private Calendar mEndDateCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,34 @@ public class MainActivity extends BaseActivity implements IMainView {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mChartView = (LineChart) findViewById(R.id.chart);
         mNumberOfPoints = (EditText) findViewById(R.id.data_points);
+        mStartDateEditText = (EditText) findViewById(R.id.start_date);
+        mEndDateEditText = (EditText) findViewById(R.id.end_date);
         setSupportActionBar(toolbar);
         mMainPresenter = new MainPresenter(this);
+
+        mStartDateCalendar = Calendar.getInstance();
+        mEndDateCalendar = Calendar.getInstance();
+
+        mStartDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                 * passing the EditText, mStartDateCalendar, is not my preferred way,
+                 * but I don't have much time, so I will just leave it alone.
+                 * Ideally, I would create a custom DatePickerDialog class
+                 */
+                JodaTimeUtils.createDatePickerDialog(getActivity(), mStartDateCalendar, (EditText) v).show();
+            }
+        });
+
+        mEndDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // same note as the other one in above
+                JodaTimeUtils.createDatePickerDialog(getActivity(), mEndDateCalendar, (EditText) v).show();
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +112,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         Point point;
         for (int i = 0; i < points.size(); i++) {
             point = points.get(i);
-            timestamps.add(JodaTimeUtils.getTime(point.getReadableTime()));
+            timestamps.add(JodaTimeUtils.getReadableTime(point.getTime()));
             prices.add(new Entry(point.getPrice(), i));
         }
         mChartView.setData(new LineData(timestamps, new LineDataSet(prices, getString(R.string.price))));

@@ -16,7 +16,7 @@ public class Point {
         return price;
     }
 
-    public long getReadableTime() {
+    public long getTime() {
         return time;
     }
 
